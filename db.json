@@ -1,0 +1,27 @@
+{
+    "books": [{
+            "id": 1,
+            "name": "Eloquent JavaScript",
+            "pages": 350,
+            "language": "English"
+        },
+        {
+            "id": 2,
+            "name": "Đắc Nhân Tâm",
+            "pages": 265,
+            "language": "VietNamese"
+        },
+        {
+            "id": 3,
+            "name": "God Father",
+            "pages": 400,
+            "language": "English"
+        },
+        {
+            "name": "You don't know JS",
+            "pages": 321,
+            "language": "English",
+            "id": 4
+        }
+    ]
+}

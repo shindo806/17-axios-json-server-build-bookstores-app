@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <h3></h3>
+
+
+
+
+
+
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        // 1. Tạo một REST api server sử dụng json-server
+        // 2. Đọc documentation của json-server và axios, tìm hiểu các method GET, POST, PUT, PATCH, DELETE
+        // 3. Làm các ví dụ sử dụng axios để gửi các request lên json-server để tạo object mới, update 1 object với dữ liệu mới, xoá 1 object
+        // Lưu ý: đây là một bài khó nếu bạn là beginner, tuy nhiên, khi hiểu được bài này bạn sẽ có thể lên 1 level mới (beginner cao cấp).
+        // Hãy dành 1 ngày để đọc, tìm hiểu, thử. Sau 1 ngày nếu bạn không làm được thì có thể hỏi trên Coders.Tokyo Slack hoặc JsLand.
+
+
+        // Default value
+        var baseURL = 'http://localhost:3000/books';
+        var createNewBook = document.getElementById('createNewBook');
+        var createBtn = document.getElementById('create-btn');
+        var htmlContent = document.getElementById('content');
+        var list = [];
+
+        // Load data and render data from json-server using axios GET method
+
+        function loadData() {
+            axios.get(baseURL)
+                .then(function (response) {
+                    list = response.data;
+                    var dataLoaded = [];
+
+                    function changeStr() {
+                        for (var i = 0; i < list.length; i++) {
+                            dataLoaded.push('<h3>' + 'Name: ' + list[i].name + '</h3>' + '<p>' + 'pages: ' + list[i]
+                                .pages + '</p>' + '<p>' + 'language: ' + list[i].language + '</p>');
+                        }
+                    }
+                    changeStr();
+                    htmlContent.innerHTML = dataLoaded.join('');
+                });
+        };
+
+
+        loadData();
+
+
+
+        // Create new item and save it to db.json using axios POST method
+
+        /* axios.post('http://localhost:3000/books', {
+            Name: "You don't know JS",
+            page:  321 ,
+            language: "English"
+          })
+          .then(function (response) {
+            
+            
+          })
+          .catch(function (error) {
+            console.log(error);
+          }); */
+    </script>
+</body>
+
+</html>
