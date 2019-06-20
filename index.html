@@ -53,25 +53,24 @@
                 });
         };
 
-
         loadData();
 
 
 
         // Create new item and save it to db.json using axios POST method
 
-        /* axios.post('http://localhost:3000/books', {
-            Name: "You don't know JS",
-            page:  321 ,
-            language: "English"
-          })
-          .then(function (response) {
-            
-            
-          })
-          .catch(function (error) {
-            console.log(error);
-          }); */
+        axios.post('baseURL', {
+                Name: ,
+                page: ,
+                language:
+            })
+            .then(function (response) {
+
+
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     </script>
 </body>
 
