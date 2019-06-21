@@ -22,7 +22,6 @@
     <div>
         <h2>Your book</h2>
         <div id="content">
-
         </div>
     </div>
 
@@ -50,27 +49,13 @@
         var htmlContent = document.getElementById('content');
         var list = [];
 
-        // Function with client
-        function getNameValue() {
-            //localStorage.removeItem('bookname');
-            sessionStorage.setItem('bookname', bookName.value)
-        }
-
-        function getPageValue() {
-            //localStorage.removeItem('bookpage');
-            sessionStorage.setItem('bookpage', bookPages.value)
-        }
-
-        function getLangValue() {
-            //localStorage.removeItem('booklang');
-            sessionStorage.setItem('booklang', bookLanguage.value)
-        }
+        // Declares function
         // Load data and render data from json-server using axios GET method
-
         function loadData() {
             axios.get(baseURL)
                 .then(function (response) {
                     list = response.data;
+
                     var dataLoaded = [];
 
                     function changeStr() {
@@ -90,11 +75,11 @@
         // Create new item and save it to db.json using axios POST method
         function addData() { // use by Save new book - button on the screen
             var bookName = document.getElementById('name');
-            bookName.addEventListener('change', getNameValue);
+            bookName.addEventListener('change', bookname);
             var bookPages = document.getElementById('pages');
-            bookPages.addEventListener('change', getPageValue);
+            bookPages.addEventListener('change', bookpage);
             var bookLanguage = document.getElementById('language');
-            bookLanguage.addEventListener('change', getLangValue);
+            bookLanguage.addEventListener('change', booklang);
 
             var bookname = function getNameValue() {
                 return bookName.value;
@@ -133,6 +118,45 @@
                 .then(function () {
                     loadData(); // re-render page
                     deleteID.value = ''; // Set input field to empty
+                });
+        };
+
+        // Edit item from db.json using axios PATCH method
+        var editBtn = document.getElementById('edit-btn');
+        editBtn.addEventListener('click', editItem);
+
+        function editItem() { // Use by Remove book - button on the screen
+            var editID = document.getElementById('editID');
+            var editName = document.getElementById('editName');
+            editName.addEventListener('change', editBookname);
+            var editPage = document.getElementById('editPage');
+            editPage.addEventListener('change', editBookpage);
+            var editLang = document.getElementById('editLang');
+            editLang.addEventListener('change', editBooklang);
+
+            var editBookname = function getEditNameValue() {
+                return editName.value;
+            }
+            var editBookpage = function getEditPageValue() {
+                return editPage.value;
+            }
+            var editBooklang = function getEditLangValue() {
+                return editLang.value;
+            }
+            console.log(editBookname());
+            return axios.patch(baseURL + editID.value, {
+                    id: editID.value,
+                    name: editBookname(),
+                    pages: editBookpage(),
+                    language: editBooklang()
+                })
+                .then(res => res.data)
+                .then(function () {
+                    loadData(); // re-render page
+                    editID.value = ''; // Set input field to empty
+                    editName.value = '';
+                    editPage.value = '';
+                    editLang.value = '';
                 });
         };
     </script>
