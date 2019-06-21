@@ -1,27 +1,16 @@
 {
-    "books": [{
-            "id": 1,
-            "name": "Eloquent JavaScript",
-            "pages": 350,
-            "language": "English"
-        },
-        {
-            "id": 2,
-            "name": "Đắc Nhân Tâm",
-            "pages": 265,
-            "language": "VietNamese"
-        },
-        {
-            "id": 3,
-            "name": "God Father",
-            "pages": 400,
-            "language": "English"
-        },
-        {
-            "name": "You don't know JS",
-            "pages": 321,
-            "language": "English",
-            "id": 4
-        }
-    ]
+  "books": [
+    {
+      "name": "Eloquent Javascript",
+      "pages": "450",
+      "language": "English",
+      "id": 5
+    },
+    {
+      "name": "You Don't Know JS",
+      "pages": "600",
+      "language": "English",
+      "id": 6
+    }
+  ]
 }

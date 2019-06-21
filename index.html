@@ -10,7 +10,21 @@
 
 <body>
 
-    <h3></h3>
+    <h1>Book Stores</h1>
+    <input type="text" id="name" placeholder="Enter book's name">
+    <input type="text" id="pages" placeholder="Enter book's pages">
+    <input type="text" id="language" placeholder="Enter book's language">
+    <button id="create-btn">Save new book</button>
+    <div>
+        <input type="text" id="bookID" placeholder="Enter book's ID">
+        <button id="delete-btn">Remove book</button>
+    </div>
+    <div>
+        <h2>Your book</h2>
+        <div id="content">
+
+        </div>
+    </div>
 
 
 
@@ -28,12 +42,29 @@
 
 
         // Default value
-        var baseURL = 'http://localhost:3000/books';
-        var createNewBook = document.getElementById('createNewBook');
+        var baseURL = 'http://localhost:3000/books/';
         var createBtn = document.getElementById('create-btn');
+        createBtn.addEventListener('click', addData);
+        var deleteBtn = document.getElementById('delete-btn');
+        deleteBtn.addEventListener('click', deleteItem);
         var htmlContent = document.getElementById('content');
         var list = [];
 
+        // Function with client
+        function getNameValue() {
+            //localStorage.removeItem('bookname');
+            sessionStorage.setItem('bookname', bookName.value)
+        }
+
+        function getPageValue() {
+            //localStorage.removeItem('bookpage');
+            sessionStorage.setItem('bookpage', bookPages.value)
+        }
+
+        function getLangValue() {
+            //localStorage.removeItem('booklang');
+            sessionStorage.setItem('booklang', bookLanguage.value)
+        }
         // Load data and render data from json-server using axios GET method
 
         function loadData() {
@@ -44,8 +75,9 @@
 
                     function changeStr() {
                         for (var i = 0; i < list.length; i++) {
-                            dataLoaded.push('<h3>' + 'Name: ' + list[i].name + '</h3>' + '<p>' + 'pages: ' + list[i]
-                                .pages + '</p>' + '<p>' + 'language: ' + list[i].language + '</p>');
+                            dataLoaded.push('<h3>' + 'ID: ' + list[i].id + '</h3>' + '<h3>' + 'Name: ' + list[i]
+                                .name + '</h3>' + '<p>' + 'Pages: ' + list[i].pages + '</p>' + '<p>' +
+                                'Language: ' + list[i].language + '</p>');
                         }
                     }
                     changeStr();
@@ -55,22 +87,54 @@
 
         loadData();
 
-
-
         // Create new item and save it to db.json using axios POST method
+        function addData() { // use by Save new book - button on the screen
+            var bookName = document.getElementById('name');
+            bookName.addEventListener('change', getNameValue);
+            var bookPages = document.getElementById('pages');
+            bookPages.addEventListener('change', getPageValue);
+            var bookLanguage = document.getElementById('language');
+            bookLanguage.addEventListener('change', getLangValue);
 
-        axios.post('baseURL', {
-                Name: ,
-                page: ,
-                language:
-            })
-            .then(function (response) {
+            var bookname = function getNameValue() {
+                return bookName.value;
+            }
+            var bookpage = function getPageValue() {
+                return bookPages.value;
+            }
+            var booklang = function getLangValue() {
+                return bookLanguage.value;
+            }
+            return axios.post(baseURL, {
+                    name: bookname(),
+                    pages: bookpage(),
+                    language: booklang()
+                })
+                .then(res => res.data)
+                .then(function () {
+                    loadData(); // re-render page
+                    bookName.value = ''; // set input field to empty
+                    bookPages.value = '';
+                    bookLanguage.value = '';
+                });
+        }
 
+        // Remove item from db.json using axios DELETe method 
 
-            })
-            .catch(function (error) {
-                console.log(error);
+        function deleteItem() { // Use by Remove book - button on the screen
+            var deleteID = document.getElementById('bookID');
+            var inputID = deleteID.value;
+            deleteID.addEventListener('change', function () {
+                inputID = deleteID.value;
             });
+
+            return axios.delete(baseURL + inputID)
+                .then(res => res.data)
+                .then(function () {
+                    loadData(); // re-render page
+                    deleteID.value = ''; // Set input field to empty
+                });
+        };
     </script>
 </body>
 
